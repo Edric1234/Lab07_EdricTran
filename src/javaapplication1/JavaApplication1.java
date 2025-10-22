@@ -4,19 +4,22 @@
  */
 package javaapplication1;
 
-import java.time.Duration;
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -33,8 +36,6 @@ public class JavaApplication1 extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        BorderPane bp = new BorderPane();
-
 
         Circle circle = new Circle();
         circle.setRadius(50);
@@ -48,14 +49,30 @@ public class JavaApplication1 extends Application {
         pt.setNode(circle);
         pt.setCycleCount(Timeline.INDEFINITE);
         pt.setAutoReverse(false);
+        pt.setDuration(new Duration(1000));
+        pt.setInterpolator(Interpolator.LINEAR);
         pt.play();
         
         Line line = new Line(0, 300, 800, 300);
 
-        Pane pane = new Pane(circle, line);
-        bp.setTop(pane);
 
-        Scene scene = new Scene(bp, 800, 600);
+        ///////////////////////////////////
+        Polygon triangle = new Polygon(100, 400, 300, 400, 200, 300);
+        triangle.setFill(Color.LIGHTBLUE);
+        
+        Button start = new Button("Start");
+        Button reset = new Button("Reset");
+        Button exit = new Button("Exit");
+        
+        start.setLayoutX(20);
+        start.setLayoutY(570);
+        reset.setLayoutX(80);
+        reset.setLayoutY(570);
+        exit.setLayoutX(144);
+        exit.setLayoutY(570);
+        
+        Pane pane = new Pane(circle, line, triangle, start, reset, exit);
+        Scene scene = new Scene(pane, 800, 600);
         stage.setScene(scene);
         stage.setTitle("Lab 07");
         stage.show();
